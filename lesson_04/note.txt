@@ -1,0 +1,56 @@
+## Ascii 編碼
+48 0
+65 A
+97 a
+
+7 /g 聲響 (主機板會發出聲音)
+8 \b back space
+9 \t tap
+10 \n line feed 換行
+13 回到開頭
+
+最多到 127
+
+## 內建字元處理函式庫 <cctype>
+
+scanf 不用加 & asign 字串給變數
+
+printf 變數前加上 & 會印出記憶體位置，但是陣列有沒有加 & 都會列印出記憶體位置
+
+字串
+
+宣告陣列盡量用 4 的倍數，因為 32/64 位元 都是 4 的倍數
+
+
+拿到空白句子的方式
+1.
+可以用 regular expression 免除空白間隔，這樣可以達到一個有空白的句子
+scanf("%[^\n]s", str);
+但是不是每個作業系統都支援 regular expression
+
+2.
+使用 gets
+gets(str)
+先 scanf 再用 gets 接者執行，會有意想不到的結果
+
+因為兩個 function 處理結束字元的方式不同，
+enter 會被 gets 當作輸入的字元
+
+scanf
+fflush(stdin)
+gets
+
+但是 fflush(stdin) 會有系統支援問題
+
+抓取字串最好使用的方式是 scanf(" %c", var); 之前加空白
+
+## 二維字元陣列
+Unicode 佔三格
+Big5 佔兩格
+
+strcmp
+比 ASCII 大小
+
+
+memcpy strcpy 都可以拿來複製字串
+或是使用迴圈一個一個字元複製
