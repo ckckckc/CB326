@@ -42,8 +42,6 @@ gets
 
 但是 fflush(stdin) 會有系統支援問題
 
-抓取字串最好使用的方式是 scanf(" %c", var); 之前加空白
-
 ## 二維字元陣列
 Unicode 佔三格
 Big5 佔兩格
