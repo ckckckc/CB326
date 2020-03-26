@@ -1,0 +1,19 @@
+# function
+
+## function intruduction
+C 沒有 nest function，不能在 function 裡宣告 function。
+
+函式也可以存在指標裡
+
+可以查查靜態區域變數
+
+單個程式最大 stack 2MB，heap 為作業系統記憶體大小。
+
+查查 global、stack、heap 的差異性
+
+call by address
+
+#ifndef HELLO_H
+意思是 幫你看有沒有定義過 hello.h 有被定義就跳過，避免重複定義，_ 跟 大寫的命名是不成文規定
+# endif
+意思是結束上面 ifndef 的判斷
