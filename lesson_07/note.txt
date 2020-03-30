@@ -1,0 +1,33 @@
+#
+
+##
+C++ 也可以處理 C 的程式碼。
+
+指標佔的空間：8 bytes 32位元 4bytes
+
+. 的優先執行順序大於 *，所以 (*pointer). 的寫法要括號住
+
+pointer-> 跟 (*pointer). 意思一樣
+
+指標要拿到記憶體位置的方式：
+    1. malloc
+    2. 用 & 取得其他變數的記憶體位置並給予該指標
+
+可以用 typedef 的方式，使宣告語法能自定義成更簡單的寫法
+
+不成文規定：_ 為原本 constructor 的命名規則，讓自定義的寫法沒有 _ 更簡單使宣告。
+
+##
+
+about fclose:
+http://www.cplusplus.com/reference/cstdio/fclose/?kw=fclose
+
+##
+
+/ 來當作路徑字串，作業系統相容性比 \\ 好
+
+
+
+補充：
+John von Neumann
+fflush 的本意
