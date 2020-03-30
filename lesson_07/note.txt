@@ -31,3 +31,5 @@ http://www.cplusplus.com/reference/cstdio/fclose/?kw=fclose
 補充：
 John von Neumann
 fflush 的本意
+union
+enum
