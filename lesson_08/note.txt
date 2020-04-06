@@ -1,0 +1,62 @@
+#
+
+##
+
+從參考跟重載函示開始，C++ 向下相容 C，之前學的都可以執行
+
+C 語言是第三代程式語言
+
+物件導向是第五代程式語言
+
+第四代是 SQL
+
+C++    <-> C
+new    <-> malloc
+delete <-> freee
+
+const <-> #define
+
+在 C++ 的 delete有分成：
+    刪除陣列型態的指標 delete [] 指標名
+    刪除單一指標      delete 指標名
+
+
+std::string 的常用 method 可以自己看文件
+insert replace find substr
+
+## C++ Reference
+
+pionter refference都是取記憶體位置到某變數，
+但宣告方式不同，
+好處是取得記憶體對應的值不用加*
+
+int d = 10;
+int *p = &d;
+int &ref = d;
+ref *p d 都是 10
+
+ref 無法印出自己記憶體位置。
+
+必須理解
+call by value/address/reference
+的差異性
+
+可以用這個概念理解 call by reference
+int &val = value;
+參數      = 引數
+
+## function overload
+
+如果沒有對應的 function 型態會呼叫接近的 function
+個數優先
+再來找型態相近
+
+##
+泡沫排序增進效能的方式：
+原本是 (n - 1) * (n - 1) 次，
+可以設一個 flag，如果沒進入交換程序，代表已經排好，就離開回圈
+
+##
+樣板函式
+
+homework 要用 c/c++ 都可以
