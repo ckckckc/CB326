@@ -65,7 +65,7 @@ typedef struct _AddressInfo {
 #define INDEX_ADDRESS_PHONE 2
 #define INDEX_ADDRESS_EMAIL 3
 
-char getInputCommand();
+char getInputCommand(void);
 void doCommandByInput(char command, AddressInfo[]);
 void initializeAddressBook(AddressInfo[]);
 void insertAddressBook(AddressInfo[]);
@@ -101,8 +101,8 @@ void initializeAddressBook(AddressInfo addressBook[]) {
 
 char getInputCommand() {
     char input;
-    // printf("i: 插入\nl: 列出\ns: 存檔\no: 讀檔\nq: 結束\n");
-    scanf("%c", &input);
+    printf("i: 插入\nl: 列出\ns: 存檔\no: 讀檔\nc: 還原\nq: 結束\n");
+    scanf(" %c", &input);
     return input;
 }
 
@@ -110,7 +110,7 @@ void insertAddressBook(AddressInfo addressBook[]) {
     int i;
     for (i = 0; i < MAX_DATA_COUNT; i++) {
         if (addressBook[i].id == 0) {
-            scanf("%s%s%s", &addressBook[i].name, &addressBook[i].phone, &addressBook[i].email);
+            scanf("%s%s%s", addressBook[i].name, addressBook[i].phone, addressBook[i].email);
             addressBook[i].id = i + 1;
             return;
         }
