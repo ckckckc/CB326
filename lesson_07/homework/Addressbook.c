@@ -65,8 +65,11 @@ typedef struct _AddressInfo {
 #define INDEX_ADDRESS_PHONE 2
 #define INDEX_ADDRESS_EMAIL 3
 
+#define ADDRESS_INITIAL_VALUE_ID 0
+#define ADDRESS_INITIAL_VALUE_EMPTY_STRING ""
+
 char getInputCommand(void);
-void doCommandByInput(char command, AddressInfo[]);
+void handleAddressBookByCommand(AddressInfo[], char);
 void initializeAddressBook(AddressInfo[]);
 void insertAddressBook(AddressInfo[]);
 void listAddressBook(AddressInfo[]);
@@ -75,16 +78,16 @@ void openAddressBook(AddressInfo[]);
 void loadAddress(AddressInfo[], int, int, char *);
 
 int main() {
-    char input;
+    char command;
     AddressInfo addressBook[MAX_DATA_COUNT];
     initializeAddressBook(addressBook);
 
     do {
-        input = getInputCommand();
-        if (input != KEY_QUIT) {
-            doCommandByInput(input, addressBook);
+        command = getInputCommand();
+        if (command != KEY_QUIT) {
+            handleAddressBookByCommand(addressBook, command);
         }
-    } while (input != KEY_QUIT);
+    } while (command != KEY_QUIT);
 
     return 0;
 }
@@ -92,10 +95,10 @@ int main() {
 void initializeAddressBook(AddressInfo addressBook[]) {
     int i;
     for (i = 0; i < MAX_DATA_COUNT ; i++) {
-        strcpy(addressBook[i].name, "");
-        strcpy(addressBook[i].phone, "");
-        strcpy(addressBook[i].email, "");
-        addressBook[i].id = 0;
+        strcpy(addressBook[i].name, ADDRESS_INITIAL_VALUE_EMPTY_STRING);
+        strcpy(addressBook[i].phone, ADDRESS_INITIAL_VALUE_EMPTY_STRING);
+        strcpy(addressBook[i].email, ADDRESS_INITIAL_VALUE_EMPTY_STRING);
+        addressBook[i].id = ADDRESS_INITIAL_VALUE_ID;
     }
 }
 
@@ -109,7 +112,7 @@ char getInputCommand() {
 void insertAddressBook(AddressInfo addressBook[]) {
     int i;
     for (i = 0; i < MAX_DATA_COUNT; i++) {
-        if (addressBook[i].id == 0) {
+        if (addressBook[i].id == ADDRESS_INITIAL_VALUE_ID) {
             scanf("%s%s%s", addressBook[i].name, addressBook[i].phone, addressBook[i].email);
             addressBook[i].id = i + 1;
             return;
@@ -120,7 +123,7 @@ void insertAddressBook(AddressInfo addressBook[]) {
 void listAddressBook(AddressInfo addressBook[]) {
     int i;
     for (i = 0 ; i < MAX_DATA_COUNT ; i++) {
-        if (addressBook[i].id == 0) {
+        if (addressBook[i].id == ADDRESS_INITIAL_VALUE_ID) {
             return;
         }
         printf("Name: %s\nPhone: %s\nEmail: %s\n", addressBook[i].name, addressBook[i].phone, addressBook[i].email);
@@ -136,7 +139,7 @@ void saveAddressBook(AddressInfo addressBook[]) {
 
     file = fopen(fileName, "w");
     for (i = 0; i < MAX_DATA_COUNT; i++) {
-        if (addressBook[i].id == 0) {
+        if (addressBook[i].id == ADDRESS_INITIAL_VALUE_ID) {
             break;
         }
         fprintf(file, "%d,%s,%s,%s\n", addressBook[i].id, addressBook[i].name, addressBook[i].phone, addressBook[i].email);
@@ -202,12 +205,12 @@ void openAddressBook(AddressInfo addressBook[]) {
         }
         indexAddressColumn = 0;
         indexAddressRow++;
-    } while (1);
+    } while (!feof(file));
 
     fclose(file);
 }
 
-void doCommandByInput(char command, AddressInfo addressBook[]) {
+void handleAddressBookByCommand(AddressInfo addressBook[], char command) {
     switch (command) {
         case KEY_INSERT: {
             insertAddressBook(addressBook);
