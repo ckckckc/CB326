@@ -12,7 +12,7 @@ C 語言是第三代程式語言
 
 C++    <-> C
 new    <-> malloc
-delete <-> freee
+delete <-> free
 
 const <-> #define
 
