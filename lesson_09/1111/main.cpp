@@ -1,7 +1,7 @@
 /*
-    設計一個Pokemon類別包含下列成員：
-    令物件實體不能存取其屬性
-    使用Pokemon 類別宣告3個物件
+    設計一個Pokemon類別，使其可以攜帶跟初始等級(Lv)一樣多的物品
+    包含下列成員：
+    使用Pokemon 類別宣告2個物件
     使用建構式建立其初始資料
     使用解構式在將其刪除前顯示刪除訊息
     新增建構式、重載建構與解構式式如下：
@@ -13,15 +13,20 @@
     int Lv: 等級
     int HpMax: 最大血量
     int HpCur: 現存血量 (HpCurrent)
+    string *items; 儲存物品的動態陣列的指標
+    int itemNum; 已經儲存物品的數量，初始為0
     方法 (公開)：
 
     Pokemon() :建構式
     初始化 pokemon 為Name = No Name, Lv=1, Hp皆 = 1
+    並進行動態記憶體配置，使其可以儲存跟初始等級(Lv)一樣多的物品
     Pokemon(string name, ...): 重載建構式
     設定初化建構式，並檢查參數合理性，同setData
+    並進行動態記憶體配置，使其可以儲存跟初始等級(Lv)一樣多的物品
     ~Pokemon() :解構式
     於記憶體釋放時執行，並顯示 "xxx has returned to the nature."
-    void ShowInfo(): 顯示資訊
+    並釋放items
+    void ShowInfo(): 顯示資訊，並新增顯示所擁有的物品，每一項物品後包含一空白字元
     void Attack(Pokemon &Target): 攻擊(並判斷其合理性)
     若攻擊方或被攻擊方血量已歸0的話，便不能攻擊
     void Defence( int n ): 防御(並判斷其合理性)
@@ -31,6 +36,8 @@
     name不得為空、空白或是標點符號，若是須提示"Name can't be empty."並設定為"No Name"
     lv不得小於1，若小於1，須提示"Lv setting error."並設定為1
     hp不得小於1，若小於1，須提示"Hp setting error."並設定為1
+    void addItem(string Item);新增擁有的物品(記得要讓已經儲存物品的數量+1)
+    寶可夢身上的Items滿了的時候要印出"XXX is full, cannot carry XXX."
     使用Pokemon 類別宣告兩個物件
     使兩物件可互相攻擊
     以 LV 當作攻擊力
@@ -47,32 +54,58 @@
     
     int main()
     {
-    
-        string name;
+        string Name, Item;
         int lv, hp;
     
-        cin >> name >> lv >> hp;
-        Pokemon *p1 = new Pokemon(name,lv,hp);
-        p1->ShowInfo();
-        delete p1;
+        cin >> Name >> lv >> hp;
+        Pokemon *p = new Pokemon(Name,lv,hp);
+        cin >> Item;
+        p->addItem(Item);
+        cin >> Item;
+        p->addItem(Item);
+        cin >> Item;
+        p->addItem(Item);
+        p->ShowInfo();
+        delete p;
     
-        cin >> name >> lv >> hp;
-        Pokemon p2(name,lv,hp);
-    
-        Pokemon p3;   
-    
-        p2.ShowInfo();
-        p3.ShowInfo();
+        cin >> Name >> lv >> hp;
+        Pokemon p1(Name,lv,hp);
+        cin >> Item;
+        p1.addItem(Item);
+        cin >> Item;
+        p1.addItem(Item);
+        cin >> Item;
+        p1.addItem(Item);   
+        p1.ShowInfo();
     
         return 0;
     }
-    請完成Pokemon.h
+    Pokemon.h已幫你準備好如下：
 
-    //...
+    #include <iostream>
+    using namespace std;
+    
+    
     class Pokemon
-    {
-    public:
-        ...
+    {   
+    public:   
+        Pokemon();
+        Pokemon(string na, int lv, int hp);
+        ~Pokemon();
+        void addItem(string item);
+        void ShowInfo();
+        void Attack(Pokemon &tg);
+        void Defence(int atkp);
+        void Cure();
+    
+    private:
+        void setData(string na, int lv, int hp);
+        string Name;
+        int Lv;
+        int HpMax;
+        int HpCur;
+        string *items;
+        int itemNum;
     };
     請完成Pokemon.cpp
 
@@ -86,9 +119,11 @@
     名字1
     等級1
     血量1
+    物品1-1 物品1-2 物品1-3
     名字2
     等級2
     血量2
+    物品2-1 物品2-2 物品2-3
 
     Output Format
     動態 Pokemon 1 資訊
@@ -102,49 +137,49 @@
     Pikachu
     5
     30
+    ItemA ItemB ItemC
     Mewtwo
     30
     300
+    ItemD ItemE ItemF
     Sample Output 1
     Name: Pikachu
     Lv: 5
     HP: 30/30
+    Items: ItemA ItemB ItemC
     
     Pikachu has returned to the nature.
     Name: Mewtwo
     Lv: 30
     HP: 300/300
+    Items: ItemD ItemE ItemF
     
-    Name: No Name
-    Lv: 1
-    HP: 1/1
-    
-    No Name has returned to the nature.
     Mewtwo has returned to the nature.
     Sample Input 2
     Charmander
     90
     700
+    ItemA ItemB ItemC
     Weedle
     -1
     -20
+    ItemD ItemE ItemF
     Sample Output 2
     Name: Charmander
     Lv: 90
     HP: 700/700
+    Items: ItemA ItemB ItemC
     
     Charmander has returned to the nature.
     Lv setting error.
     Hp setting error.
+    Weedle is full, cannot carry ItemE.
+    Weedle is full, cannot carry ItemF.
     Name: Weedle
     Lv: 1
     HP: 1/1
+    Items: ItemD
     
-    Name: No Name
-    Lv: 1
-    HP: 1/1
-    
-    No Name has returned to the nature.
     Weedle has returned to the nature.
  */
 
@@ -153,24 +188,33 @@
  
 using namespace std;
  
+using namespace std;
+ 
 int main()
 {
- 
-    string name;
+    string Name, Item;
     int lv, hp;
  
-    cin >> name >> lv >> hp;
-    Pokemon *p1 = new Pokemon(name,lv,hp);
-    p1->ShowInfo();
-    delete p1;
+    cin >> Name >> lv >> hp;
+    Pokemon *p = new Pokemon(Name,lv,hp);
+    cin >> Item;
+    p->addItem(Item);
+    cin >> Item;
+    p->addItem(Item);
+    cin >> Item;
+    p->addItem(Item);
+    p->ShowInfo();
+    delete p;
  
-    cin >> name >> lv >> hp;
-    Pokemon p2(name,lv,hp);
- 
-    Pokemon p3;   
- 
-    p2.ShowInfo();
-    p3.ShowInfo();
+    cin >> Name >> lv >> hp;
+    Pokemon p1(Name,lv,hp);
+    cin >> Item;
+    p1.addItem(Item);
+    cin >> Item;
+    p1.addItem(Item);
+    cin >> Item;
+    p1.addItem(Item);   
+    p1.ShowInfo();
  
     return 0;
 }
