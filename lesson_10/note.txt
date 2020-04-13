@@ -1,0 +1,16 @@
+#
+
+##
+friend funciton 使用時機
+速度
+自己設計很熟的 class
+
+##
+
+class ParentClass: public ChildrenClass
+
+繼承的權限最後以最嚴格的限制為準
+
+
+網址如果壞掉 換學號 成 某特定字串
+str.replace(/~d[d]{8}/, "~jfanc")
